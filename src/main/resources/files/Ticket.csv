@@ -1,4 +1,4 @@
-1;1;1;1;43475,00
-2;RESERVED;Passenger{identifier='2', firstName='s', lastName='s'};Flight{identifier='1', route=Route{description='1', airportMap={Airport{identifier='2', nameAirport='Kiev'}={DEPARTURE=Tue Jan 01 12:12:00 EET 2019, ARRIVAL=Wed Jan 02 01:12:00 EET 2019}, Airport{identifier='3', nameAirport='Che'}={DEPARTURE=Tue Jan 01 13:11:00 EET 2019, ARRIVAL=Wed Jan 02 17:17:00 EET 2019}}}, aircraft=Aircraft{type='Airbus', cabinTypeSeatsMap={ECONOM=300, BISINESS=300}}, flightDate=Thu Apr 04 11:11:00 EEST 2019};10
-2;RESERVED;2;1;10
-2;RESERVED;2;1;10.1
+2;ONSALE;null;1;43475
+3;ONSALE;null;1;10.089999999999999857891452847979962825775146484375
+4;ONSALE;null;1;10
+5;ONSALE;null;1;1111.0

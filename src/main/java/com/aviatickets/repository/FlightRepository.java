@@ -10,17 +10,21 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FlightRepository {
     private final String FILE_PATH = "D:\\JavaCourse\\AviaTickets\\src\\main\\resources\\files\\Flight.csv";
 
     RouteRepository routeRepository;
     AircraftRepository aircraftRepository;
+    AirportRepository airportRepository;
 
     public FlightRepository() {
         routeRepository = new RouteRepository();
         aircraftRepository = new AircraftRepository();
+        airportRepository = new AirportRepository();
     }
 
     public Flight getByIdFlight(String identifier) {
@@ -45,6 +49,41 @@ public class FlightRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Flight> getAllChoiceFlight(Date firstDate, Date secondDate, String firstAirport, String secodAirport) {
+        String line;
+        Flight flight;
+        List<Flight> list = new ArrayList<>();
+        List<String> str = new ArrayList<>();
+        for (Object s: routeRepository.getAllChoiceRouteId(firstAirport, secodAirport)) {
+            str.add(s.toString());
+        }
+        try (BufferedReader readCSV = new BufferedReader(new FileReader(FILE_PATH))) {
+            while ((line = readCSV.readLine()) != null) {
+                String[] get = line.split(";");
+                if (get.length == 4) {
+                    for (int i = 0; i < str.size(); i++) {
+                        if (str.get(i).equalsIgnoreCase(get[0])) {
+                            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                            Date date = formatter.parse(get[3]);
+                            if (firstDate.after(date) && secondDate.before(date)) {
+                                flight = new Flight(get[0], routeRepository.getByIdRoute(get[1]),
+                                        aircraftRepository.getByTypeAircraft(get[2]), date);
+                                list.add(flight);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
 

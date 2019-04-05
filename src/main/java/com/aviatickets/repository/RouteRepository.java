@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RouteRepository {
     private final String FILE_PATH = "D:\\JavaCourse\\AviaTickets\\src\\main\\resources\\files\\Route.csv";
@@ -65,5 +63,26 @@ public class RouteRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List getAllChoiceRouteId(String startAirport, String finishAirport) {
+        String line;
+        List<String> list = new ArrayList<>();
+        try (BufferedReader readCSV = new BufferedReader(new FileReader(FILE_PATH))) {
+            while ((line = readCSV.readLine()) != null) {
+                String[] getId = line.split(";");
+                String[] getBox = getId[1].split(",");
+                String[] startBox = getBox[0].split(":");
+                String[] finishBox = getBox[2].split(":");
+                if (startBox[0].equalsIgnoreCase(startAirport) && finishBox[0].equalsIgnoreCase(finishAirport)) {
+                    list.add(getId[0]);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
