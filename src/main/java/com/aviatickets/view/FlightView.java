@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FlightView {
-    private final String startMessage = "Hello!\n" +
-            "From what airport will fly?";
-    private final String finishAirportMessage = "In which aeroport will you fly?";
+    private final String startMessage = "From what airport will fly?";
+    private final String finishAirportMessage = "In which airport will you fly?";
     private final String startDateMessage = "Please choose from which date the flight will take place?\n" +
             "enter the date in the format: dd.MM.yyyy";
     private final String finishDateMessage = "Please enter the last flight date as late as possible\n" +

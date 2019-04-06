@@ -8,7 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 public class FlightController {
-    FlightRepository flightRepository = new FlightRepository();
+    FlightRepository flightRepository;
+
+    public FlightController() {
+        flightRepository = new FlightRepository();
+    }
 
     public List<Flight> getAllFlight(Date firstDate, Date secondDate, String firstAirport, String secodAirport) {
         return flightRepository.getAllChoiceFlight(firstDate, secondDate, firstAirport, secodAirport);

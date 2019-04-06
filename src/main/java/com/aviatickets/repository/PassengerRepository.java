@@ -8,6 +8,26 @@ import java.io.*;
 public class PassengerRepository {
     private final String FILE_PATH = "D:\\JavaCourse\\AviaTickets\\src\\main\\resources\\files\\Passenger.csv";
 
+    public String getIdPassenger() {
+        String line;
+        int counter = 1;
+        String counterPassenger = "";
+        try (BufferedReader readCSV = new BufferedReader(new FileReader(FILE_PATH))) {
+            while ((line = readCSV.readLine()) != null) {
+                String[] splitBox = line.split(";");
+                if (!line.equals("")) {
+                    if (Integer.parseInt(splitBox[0]) >= counter) {
+                        counter = Integer.parseInt(splitBox[0]) + 1;
+                    }
+                }
+            }
+            counterPassenger = String.valueOf(counter);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return counterPassenger;
+    }
+
     public Passenger getByIdPassenger(String id) {
         String savePassengerLine;
         Passenger passenger;
@@ -47,7 +67,6 @@ public class PassengerRepository {
         String savePassengerLine = null;
         StringBuffer stringBuffer = new StringBuffer();
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(FILE_PATH)))) {
-            //String passengerRecords = passenger.getIdentifier() + ";" + passenger.getFirstName() +";" + passenger.getLastName();
             while ((savePassengerLine = reader.readLine()) != null) {
                 String[] getBox = savePassengerLine.split(";");
                 if (!getBox[0].equalsIgnoreCase(identifier)) {

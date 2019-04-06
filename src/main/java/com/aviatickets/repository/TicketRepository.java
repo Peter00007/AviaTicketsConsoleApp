@@ -24,18 +24,23 @@ public class TicketRepository {
 
     public Long getIdTicket() {
         String line;
-        Long counter = 0L;
+        int counter = 1;
+        Long idTicket = 0L;
         try (BufferedReader readCSV = new BufferedReader(new FileReader(FILE_PATH))) {
             while ((line = readCSV.readLine()) != null) {
                 String[] splitBox = line.split(";");
-                if (Long.parseLong(splitBox[0]) > counter) {
-                    counter = Long.parseLong(splitBox[0]) + 1;
+                if (!line.equals("")) {
+                    if (Integer.parseInt(splitBox[0]) >= counter) {
+                        counter = Integer.parseInt(splitBox[0]) + 1;
+                    }
                 }
             }
+            String strTicket = String.valueOf(counter);
+            idTicket = Long.parseLong(strTicket);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        return counter;
+        return idTicket;
     }
 
     public Ticket createTicket(Passenger passenger, String idFlight, BigDecimal price) {
@@ -107,8 +112,7 @@ public class TicketRepository {
                 writer.append(";");
                 if (list.get(i).getPassenger() != null) {
                     writer.append(list.get(i).getPassenger().getIdentifier());
-                }
-                else {
+                } else {
                     writer.append(null);
                 }
                 writer.append(";");

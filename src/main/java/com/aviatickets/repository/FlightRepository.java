@@ -56,20 +56,19 @@ public class FlightRepository {
         Flight flight;
         List<Flight> list = new ArrayList<>();
         List<String> str = new ArrayList<>();
-        for (Object s: routeRepository.getAllChoiceRouteId(firstAirport, secodAirport)) {
+        for (Object s : routeRepository.getAllChoiceRouteId(firstAirport, secodAirport)) {
             str.add(s.toString());
         }
         try (BufferedReader readCSV = new BufferedReader(new FileReader(FILE_PATH))) {
             while ((line = readCSV.readLine()) != null) {
                 String[] get = line.split(";");
-                if (get.length == 4) {
+                if (!line.equals("")) {
                     for (int i = 0; i < str.size(); i++) {
-                        if (str.get(i).equalsIgnoreCase(get[0])) {
-                            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                        if (str.get(i).equalsIgnoreCase(get[1])) {
+                            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH.mm");
                             Date date = formatter.parse(get[3]);
-                            if (firstDate.after(date) && secondDate.before(date)) {
-                                flight = new Flight(get[0], routeRepository.getByIdRoute(get[1]),
-                                        aircraftRepository.getByTypeAircraft(get[2]), date);
+                            if (firstDate.before(date) && secondDate.after(date)) {
+                                flight = getByIdFlight(get[0]);
                                 list.add(flight);
                             }
                         }
